@@ -29,7 +29,7 @@ spec:
           value: "otel-collector.devopsnow:14268"
         resources:
           requests:
-            cpu: 200m
+            cpu: 150m
             memory: 180Mi
           limits:
             cpu: 300m
