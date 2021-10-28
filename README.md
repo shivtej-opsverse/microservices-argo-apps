@@ -30,14 +30,26 @@ Via Argo CD UI or CLI (shown here), you can:
 3.  Add your target Kubernetes cluster (ensure you're on it):
 
     ```
-    $ argocd cluster add <nameOfCluserConfig> --name <nameOfCluster>
+    $ argocd cluster add <nameOfClusterConfig> --name <nameOfCluster>
     $ argocd cluster list
     ```
 
-4.  Once added, **make sure** `spec.source.repoURL` and `spec.destination.server` point to their respective names from (2) and (3) above
+4.  Once added, **make sure** `spec.source.repoURL` and `spec.destination.server` point to their respective names from (2) and (3) above, e.g.:
 
-5.  Add the project to point to `/apps` so future changes get automatically deployed:
+    ```
+    $  sed -i 's/kubernetes.changeme.svc/10.64.52.7/g' *.yaml
+    ```
 
-   ```
-   $ argocd app create apps-of-apps --repo https://repo/from/step/2 --path apps --revision HEAD --dest-server https://<fromStep3> --directory-recurse
-   ```
+5.  Create the apps for whichever services you wish Argo CD deploy... e.g.,:
+
+    ```
+    $ for myapp in adservice cartservice checkoutservice currencyservice emailservice frontend loadgenerator paymentservice productcatalogservice recommendationservice redis-cart shippingservice; do \
+        argocd app create ${myapp}-app --repo https://repo/from/step/2 --path ${myapp} --revision demo-1 --dest-server https://<fromStep3> --dest-namespace <targetNamespace; \
+      done
+    ```
+
+    or, alternatively, if your destination cluster has Argo CD CRDs installed on it, you can use the [App of Apps Pattern](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#app-of-apps) to create a single app which would, in turn, create the chile apps: 
+
+    ```
+    $ argocd app create app-of-apps --repo https://repo/from/step/2 --path apps --revision HEAD --dest-server https://<fromStep3> --directory-recurse
+    ```
