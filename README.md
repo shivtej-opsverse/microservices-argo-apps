@@ -15,7 +15,7 @@ To allow a single repo for Argo CD to easily deploy a sample application (for de
 
 ## Usage
 
-Via Argo CD UI or CLI (shown here), you can:
+Via Argo CD UI or [CLI](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (shown here), you can:
 
 1.  Log into your Argo instance:
 
