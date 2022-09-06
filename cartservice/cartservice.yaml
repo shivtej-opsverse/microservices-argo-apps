@@ -48,6 +48,6 @@ spec:
     app: cartservice
   ports:
   - name: grpc
-    port: 7070
-    targetPort: 7070
+    port: 7071
+    targetPort: 7071
 ---
