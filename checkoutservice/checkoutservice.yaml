@@ -64,6 +64,6 @@ spec:
     app: checkoutservice
   ports:
   - name: grpc
-    port: 5050
-    targetPort: 5050
+    port: 5051
+    targetPort: 5051
 ---
